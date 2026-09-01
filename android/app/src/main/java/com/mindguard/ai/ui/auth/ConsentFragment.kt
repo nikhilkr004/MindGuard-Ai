@@ -29,6 +29,7 @@ class ConsentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.resetConsentState()
 
         val checkBoxesListener = {
             val bothChecked = binding.cbDisclaimer.isChecked && binding.cbPrivacy.isChecked
@@ -51,12 +52,17 @@ class ConsentFragment : Fragment() {
                 is Resource.Success -> {
                     binding.consentProgress.visibility = View.GONE
                     Toast.makeText(requireContext(), "Consent recorded", Toast.LENGTH_SHORT).show()
+                    viewModel.resetConsentState()
                     findNavController().navigate(R.id.action_consent_to_home)
                 }
                 is Resource.Error -> {
                     binding.consentProgress.visibility = View.GONE
                     binding.btnAcceptConsent.isEnabled = true
                     Toast.makeText(requireContext(), resource.message, Toast.LENGTH_LONG).show()
+                }
+                null -> {
+                    binding.consentProgress.visibility = View.GONE
+                    binding.btnAcceptConsent.isEnabled = binding.cbDisclaimer.isChecked && binding.cbPrivacy.isChecked
                 }
             }
         }

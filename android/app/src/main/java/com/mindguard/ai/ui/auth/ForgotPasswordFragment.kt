@@ -34,7 +34,7 @@ class ForgotPasswordFragment : Fragment() {
         }
 
         binding.btnSendReset.setOnClickListener {
-            val email = binding.etForgotEmail.text?.toString().orEmpty()
+            val email = binding.etForgotEmail.text?.toString().orEmpty().trim()
             viewModel.sendPasswordReset(email)
         }
 
@@ -54,6 +54,10 @@ class ForgotPasswordFragment : Fragment() {
                     binding.forgotProgress.visibility = View.GONE
                     binding.btnSendReset.isEnabled = true
                     Toast.makeText(requireContext(), resource.message, Toast.LENGTH_LONG).show()
+                }
+                null -> {
+                    binding.forgotProgress.visibility = View.GONE
+                    binding.btnSendReset.isEnabled = true
                 }
             }
         }

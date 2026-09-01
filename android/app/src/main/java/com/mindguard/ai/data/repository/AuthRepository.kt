@@ -3,6 +3,8 @@ package com.mindguard.ai.data.repository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import com.mindguard.ai.data.model.Professional
 import com.mindguard.ai.data.model.User
 import com.mindguard.ai.data.model.UserRole
 import com.mindguard.ai.utils.Resource
@@ -62,16 +64,17 @@ class AuthRepositoryImpl(
             val firebaseUser = authResult.user ?: throw IllegalStateException("User creation failed: Null UID")
             val uid = firebaseUser.uid
             
-            // Set displayName on Firebase User
+            // 1. Set displayName on Firebase Auth User
             try {
                 val profileUpdate = UserProfileChangeRequest.Builder()
                     .setDisplayName(name.trim())
                     .build()
                 firebaseUser.updateProfile(profileUpdate).await()
             } catch (e: Exception) {
-                // Non-critical profile update failure
+                // Non-critical
             }
 
+            // 2. Persist user document in Firestore users/{uid}
             val user = User(
                 uid = uid,
                 email = email.trim(),
@@ -80,11 +83,22 @@ class AuthRepositoryImpl(
                 consentAccepted = false,
                 createdAt = System.currentTimeMillis()
             )
-            
-            try {
-                firestore.collection("users").document(uid).set(user).await()
-            } catch (e: Exception) {
-                // If Firestore write is slow or offline, user is still registered in Auth
+            firestore.collection("users").document(uid).set(user, SetOptions.merge()).await()
+
+            // 3. If role is PROFESSIONAL, persist in professionals/{uid}
+            if (role == UserRole.PROFESSIONAL) {
+                val professional = Professional(
+                    professionalId = uid,
+                    name = name.trim(),
+                    title = "Licensed Practitioner",
+                    specialty = "General Mental Health",
+                    isVerified = false
+                )
+                try {
+                    firestore.collection("professionals").document(uid).set(professional, SetOptions.merge()).await()
+                } catch (e: Exception) {
+                    // Non-critical
+                }
             }
             
             Resource.Success(user)
@@ -99,15 +113,29 @@ class AuthRepositoryImpl(
             val firebaseUser = authResult.user ?: throw IllegalStateException("Sign in failed: Null UID")
             val uid = firebaseUser.uid
             
+            // Retrieve or ensure user document in Firestore users/{uid}
             val user = try {
                 val doc = firestore.collection("users").document(uid).get().await()
-                doc.toObject(User::class.java) ?: User(
-                    uid = uid,
-                    email = firebaseUser.email ?: email.trim(),
-                    displayName = firebaseUser.displayName ?: ""
-                )
+                if (doc.exists()) {
+                    doc.toObject(User::class.java) ?: User(
+                        uid = uid,
+                        email = firebaseUser.email ?: email.trim(),
+                        displayName = firebaseUser.displayName ?: ""
+                    )
+                } else {
+                    // Create if missing
+                    val newUser = User(
+                        uid = uid,
+                        email = firebaseUser.email ?: email.trim(),
+                        displayName = firebaseUser.displayName ?: "",
+                        role = UserRole.USER,
+                        consentAccepted = false,
+                        createdAt = System.currentTimeMillis()
+                    )
+                    firestore.collection("users").document(uid).set(newUser, SetOptions.merge()).await()
+                    newUser
+                }
             } catch (e: Exception) {
-                // Fallback to Firebase Auth user details if Firestore is unreachable
                 User(
                     uid = uid,
                     email = firebaseUser.email ?: email.trim(),
@@ -153,7 +181,6 @@ class AuthRepositoryImpl(
             ).await()
             Resource.Success(Unit)
         } catch (e: Exception) {
-            // Even if offline, treat as accepted for active session
             Resource.Success(Unit)
         }
     }
