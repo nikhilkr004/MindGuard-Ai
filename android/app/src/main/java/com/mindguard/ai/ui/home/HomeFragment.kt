@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.mindguard.ai.MindGuardApp
+import com.mindguard.ai.R
 import com.mindguard.ai.databinding.FragmentHomeBinding
 import com.mindguard.ai.ui.auth.AuthViewModel
 import com.mindguard.ai.ui.auth.AuthViewModelFactory
@@ -32,6 +34,14 @@ class HomeFragment : Fragment() {
             if (user != null && user.displayName.isNotBlank()) {
                 binding.tvUserName.text = user.displayName
             }
+        }
+
+        binding.btnTakeAssessment.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_questionnaire)
+        }
+
+        binding.cardStartAssessment.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_questionnaire)
         }
     }
 

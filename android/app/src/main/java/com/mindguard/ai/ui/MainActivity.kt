@@ -31,7 +31,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.loginFragment,
                 R.id.registerFragment,
                 R.id.forgotPasswordFragment,
-                R.id.consentFragment -> {
+                R.id.consentFragment,
+                R.id.questionnaireFragment,
+                R.id.assessmentResultFragment -> {
                     bottomNav.visibility = View.GONE
                 }
                 else -> {
