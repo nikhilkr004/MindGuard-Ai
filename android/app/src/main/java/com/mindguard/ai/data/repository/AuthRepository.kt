@@ -4,7 +4,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.mindguard.ai.data.model.Professional
 import com.mindguard.ai.data.model.User
 import com.mindguard.ai.data.model.UserRole
 import com.mindguard.ai.utils.Resource
@@ -41,13 +40,17 @@ class AuthRepositoryImpl(
         val authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val firebaseUser = firebaseAuth.currentUser
             if (firebaseUser != null) {
-                firestore.collection("users").document(firebaseUser.uid)
+                val listenerRegistration = firestore.collection("users").document(firebaseUser.uid)
                     .addSnapshotListener { snapshot, _ ->
-                        val user = snapshot?.toObject(User::class.java) ?: User(
-                            uid = firebaseUser.uid,
-                            email = firebaseUser.email ?: "",
-                            displayName = firebaseUser.displayName ?: ""
-                        )
+                        val user = if (snapshot != null && snapshot.exists()) {
+                            snapshot.toObject(User::class.java) ?: parseUserFromDoc(snapshot, firebaseUser.uid)
+                        } else {
+                            User(
+                                uid = firebaseUser.uid,
+                                email = firebaseUser.email ?: "",
+                                displayName = firebaseUser.displayName ?: ""
+                            )
+                        }
                         trySend(user)
                     }
             } else {
@@ -64,40 +67,53 @@ class AuthRepositoryImpl(
             val firebaseUser = authResult.user ?: throw IllegalStateException("User creation failed: Null UID")
             val uid = firebaseUser.uid
             
-            // 1. Set displayName on Firebase Auth User
+            // 1. Update Firebase Auth displayName
             try {
                 val profileUpdate = UserProfileChangeRequest.Builder()
                     .setDisplayName(name.trim())
                     .build()
                 firebaseUser.updateProfile(profileUpdate).await()
             } catch (e: Exception) {
-                // Non-critical
+                // Non-fatal
             }
 
-            // 2. Persist user document in Firestore users/{uid}
+            // 2. Persist comprehensive user profile in Firestore: users/{uid}
             val user = User(
                 uid = uid,
                 email = email.trim(),
                 displayName = name.trim(),
-                role = role,
+                role = role.name,
                 consentAccepted = false,
-                createdAt = System.currentTimeMillis()
+                consentAcceptedAt = null,
+                createdAt = System.currentTimeMillis(),
+                photoUrl = null,
+                fcmToken = null
             )
-            firestore.collection("users").document(uid).set(user, SetOptions.merge()).await()
+            
+            firestore.collection("users").document(uid).set(user.toMap(), SetOptions.merge()).await()
 
-            // 3. If role is PROFESSIONAL, persist in professionals/{uid}
+            // 3. If role is PROFESSIONAL, persist in Firestore: professionals/{uid}
             if (role == UserRole.PROFESSIONAL) {
-                val professional = Professional(
-                    professionalId = uid,
-                    name = name.trim(),
-                    title = "Licensed Practitioner",
-                    specialty = "General Mental Health",
-                    isVerified = false
+                val professionalMap = hashMapOf<String, Any?>(
+                    "professionalId" to uid,
+                    "name" to name.trim(),
+                    "title" to "Licensed Practitioner",
+                    "qualifications" to "Credentials Pending Verification",
+                    "specialty" to "General Mental Health",
+                    "experienceYears" to 0,
+                    "bio" to "",
+                    "languages" to listOf("English"),
+                    "photoUrl" to "",
+                    "rating" to 5.0,
+                    "reviewCount" to 0,
+                    "isVerified" to false,
+                    "consultationFee" to 0.0,
+                    "createdAt" to System.currentTimeMillis()
                 )
                 try {
-                    firestore.collection("professionals").document(uid).set(professional, SetOptions.merge()).await()
+                    firestore.collection("professionals").document(uid).set(professionalMap, SetOptions.merge()).await()
                 } catch (e: Exception) {
-                    // Non-critical
+                    // Non-fatal
                 }
             }
             
@@ -113,26 +129,21 @@ class AuthRepositoryImpl(
             val firebaseUser = authResult.user ?: throw IllegalStateException("Sign in failed: Null UID")
             val uid = firebaseUser.uid
             
-            // Retrieve or ensure user document in Firestore users/{uid}
+            // Retrieve from Firestore users/{uid} or create if first-time
             val user = try {
                 val doc = firestore.collection("users").document(uid).get().await()
                 if (doc.exists()) {
-                    doc.toObject(User::class.java) ?: User(
-                        uid = uid,
-                        email = firebaseUser.email ?: email.trim(),
-                        displayName = firebaseUser.displayName ?: ""
-                    )
+                    doc.toObject(User::class.java) ?: parseUserFromDoc(doc, uid)
                 } else {
-                    // Create if missing
                     val newUser = User(
                         uid = uid,
                         email = firebaseUser.email ?: email.trim(),
                         displayName = firebaseUser.displayName ?: "",
-                        role = UserRole.USER,
+                        role = UserRole.USER.name,
                         consentAccepted = false,
                         createdAt = System.currentTimeMillis()
                     )
-                    firestore.collection("users").document(uid).set(newUser, SetOptions.merge()).await()
+                    firestore.collection("users").document(uid).set(newUser.toMap(), SetOptions.merge()).await()
                     newUser
                 }
             } catch (e: Exception) {
@@ -154,11 +165,15 @@ class AuthRepositoryImpl(
         val uid = firebaseUser.uid
         return try {
             val doc = firestore.collection("users").document(uid).get().await()
-            val user = doc.toObject(User::class.java) ?: User(
-                uid = uid,
-                email = firebaseUser.email ?: "",
-                displayName = firebaseUser.displayName ?: ""
-            )
+            val user = if (doc.exists()) {
+                doc.toObject(User::class.java) ?: parseUserFromDoc(doc, uid)
+            } else {
+                User(
+                    uid = uid,
+                    email = firebaseUser.email ?: "",
+                    displayName = firebaseUser.displayName ?: ""
+                )
+            }
             Resource.Success(user)
         } catch (e: Exception) {
             val fallback = User(
@@ -173,12 +188,11 @@ class AuthRepositoryImpl(
     override suspend fun acceptConsent(): Resource<Unit> {
         val uid = currentUserId ?: return Resource.Error("User is not authenticated")
         return try {
-            firestore.collection("users").document(uid).update(
-                mapOf(
-                    "consentAccepted" to true,
-                    "consentAcceptedAt" to System.currentTimeMillis()
-                )
-            ).await()
+            val consentUpdate = mapOf(
+                "consentAccepted" to true,
+                "consentAcceptedAt" to System.currentTimeMillis()
+            )
+            firestore.collection("users").document(uid).set(consentUpdate, SetOptions.merge()).await()
             Resource.Success(Unit)
         } catch (e: Exception) {
             Resource.Success(Unit)
@@ -206,5 +220,19 @@ class AuthRepositoryImpl(
 
     override fun logout() {
         auth.signOut()
+    }
+
+    private fun parseUserFromDoc(doc: com.google.firebase.firestore.DocumentSnapshot, uid: String): User {
+        return User(
+            uid = uid,
+            email = doc.getString("email").orEmpty(),
+            displayName = doc.getString("displayName").orEmpty(),
+            photoUrl = doc.getString("photoUrl"),
+            role = doc.getString("role") ?: "USER",
+            consentAccepted = doc.getBoolean("consentAccepted") ?: false,
+            consentAcceptedAt = doc.getLong("consentAcceptedAt"),
+            createdAt = doc.getLong("createdAt") ?: System.currentTimeMillis(),
+            fcmToken = doc.getString("fcmToken")
+        )
     }
 }

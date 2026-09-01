@@ -69,7 +69,7 @@ class AuthViewModelTest {
 
     @Test
     fun testRegisterSuccess() {
-        val user = User(uid = "u1", email = "john@test.com", displayName = "John", role = UserRole.USER)
+        val user = User(uid = "u1", email = "john@test.com", displayName = "John", role = UserRole.USER.name)
         coEvery { authRepository.registerWithEmail("john@test.com", "secret123", "John", UserRole.USER) } returns Resource.Success(user)
 
         viewModel.register("John", "john@test.com", "secret123", "secret123", UserRole.USER)

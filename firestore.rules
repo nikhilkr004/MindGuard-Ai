@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User profile access: authenticated users can read/write their own document
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Assessment results: authenticated users can read/write their own assessments
+    match /assessments/{assessmentId} {
+      allow read, write: if request.auth != null && (
+        resource == null || resource.data.userId == request.auth.uid || request.resource.data.userId == request.auth.uid
+      );
+    }
+    
+    // Professionals directory: all authenticated users can read, only owner can write
+    match /professionals/{professionalId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == professionalId;
+    }
+    
+    // Appointments
+    match /appointments/{appointmentId} {
+      allow read, write: if request.auth != null && (
+        resource == null || 
+        resource.data.userId == request.auth.uid || 
+        resource.data.professionalId == request.auth.uid ||
+        request.resource.data.userId == request.auth.uid
+      );
+    }
+    
+    // Consultation sessions & chat messages
+    match /consultations/{sessionId} {
+      allow read, write: if request.auth != null && (
+        resource == null || 
+        resource.data.userId == request.auth.uid || 
+        resource.data.professionalId == request.auth.uid ||
+        request.resource.data.userId == request.auth.uid
+      );
+      
+      match /messages/{messageId} {
+        allow read, write: if request.auth != null;
+      }
+    }
+    
+    // Recommendations
+    match /recommendations/{recommendationId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+  }
+}
