@@ -17,7 +17,7 @@
             android:id="@+id/tvGreeting"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Hello, Welcome back"
+            android:text="Welcome back,"
             android:textColor="@color/text_secondary"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,31 +30,33 @@
             android:layout_marginTop="2dp"
             android:text="MindGuard User"
             android:textColor="@color/text_primary"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvGreeting" />
 
         <ImageView
             android:id="@+id/ivProfile"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:src="@drawable/ic_user"
             android:background="@drawable/bg_role_selected"
-            android:padding="8dp"
+            android:padding="10dp"
             app:tint="@color/primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvGreeting"
             app:layout_constraintBottom_toBottomOf="@+id/tvUserName" />
 
         <!-- Assessment Action Card -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardStartAssessment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/card_border"
             app:cardBackgroundColor="@color/surface_light"
             app:layout_constraintTop_toBottomOf="@+id/tvUserName">
 
@@ -75,23 +77,25 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="Complete a guided 36-question assessment to evaluate depression, anxiety, and stress indicators on-device."
+                    android:layout_marginTop="8dp"
+                    android:text="Complete a guided 36-question assessment to evaluate depression, anxiety, and stress indicators with on-device ML."
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp"
-                    android:lineSpacingMultiplier="1.2" />
+                    android:lineSpacingMultiplier="1.3" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnTakeAssessment"
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="18dp"
                     android:text="Start Assessment"
                     android:textAllCaps="false"
-                    app:cornerRadius="10dp"
+                    android:textColor="@color/text_white"
+                    android:textStyle="bold"
+                    app:cornerRadius="16dp"
                     android:backgroundTint="@color/primary" />
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Quick Action Grid -->
         <TextView
@@ -130,7 +134,7 @@
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:src="@drawable/ic_shield_check"
-                    app:tint="@color/accent" />
+                    app:tint="@color/primary" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -138,7 +142,7 @@
                     android:layout_marginTop="8dp"
                     android:text="Calming Zone"
                     android:textColor="@color/text_primary"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -166,7 +170,7 @@
                     android:layout_marginTop="8dp"
                     android:text="Professionals"
                     android:textColor="@color/text_primary"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>

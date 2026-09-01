@@ -1,43 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Brand Primary & Secondary -->
-    <color name="primary">#2563EB</color>
-    <color name="primary_variant">#1D4ED8</color>
-    <color name="primary_dark">#1E293B</color>
-    <color name="primary_light">#60A5FA</color>
-    <color name="primary_container">#EFF6FF</color>
-    <color name="accent">#0D9488</color>
-    <color name="accent_light">#CCFBF1</color>
-    <color name="secondary">#6366F1</color>
+    <!-- Primary Palette (Coral Red) -->
+    <color name="primary">#FF575C</color>
+    <color name="primary_soft">#FF777B</color>
+    <color name="primary_dark">#E84A50</color>
+    <color name="primary_container">#2C1F24</color>
 
-    <!-- Neutral Backgrounds & Surfaces -->
-    <color name="background_light">#F8FAFC</color>
-    <color name="surface_light">#FFFFFF</color>
-    <color name="surface_variant">#F1F5F9</color>
-    <color name="card_border">#E2E8F0</color>
-    <color name="divider">#CBD5E1</color>
+    <!-- Backgrounds & Surfaces (Dark Navy / Charcoal / Slate) -->
+    <color name="background_light">#191921</color>
+    <color name="surface_light">#1E212A</color>
+    <color name="surface_2">#242732</color>
+    <color name="surface_variant">#242732</color>
+
+    <!-- Borders & Dividers (Soft Gray) -->
+    <color name="card_border">#35383F</color>
+    <color name="divider">#35383F</color>
+    <color name="input_stroke">#35383F</color>
+    <color name="input_stroke_focused">#FF575C</color>
 
     <!-- Typography -->
-    <color name="text_primary">#0F172A</color>
-    <color name="text_secondary">#64748B</color>
-    <color name="text_tertiary">#94A3B8</color>
+    <color name="text_primary">#F5F5F7</color>
+    <color name="text_secondary">#A5A7B0</color>
+    <color name="text_muted">#70737D</color>
     <color name="text_white">#FFFFFF</color>
 
+    <!-- Functional States -->
+    <color name="success">#4FD18B</color>
+    <color name="warning">#F6B84B</color>
+    <color name="error">#FF5B61</color>
+    <color name="info">#5B9CFF</color>
+
     <!-- Risk & Clinical Indicator Colors -->
-    <color name="risk_low">#10B981</color>
-    <color name="risk_low_container">#D1FAE5</color>
-    <color name="risk_moderate">#F59E0B</color>
-    <color name="risk_moderate_container">#FEF3C7</color>
-    <color name="risk_high">#EF4444</color>
-    <color name="risk_high_container">#FEE2E2</color>
+    <color name="risk_low">#4FD18B</color>
+    <color name="risk_low_container">#1A2E26</color>
+    <color name="risk_moderate">#F6B84B</color>
+    <color name="risk_moderate_container">#332A1C</color>
+    <color name="risk_high">#FF5B61</color>
+    <color name="risk_high_container">#381E23</color>
 
-    <!-- Alert / Crisis Notice -->
-    <color name="crisis_red">#DC2626</color>
-    <color name="crisis_banner">#FEF2F2</color>
-    <color name="crisis_border">#FECACA</color>
-
-    <!-- Input Fields -->
-    <color name="input_background">#F8FAFC</color>
-    <color name="input_stroke">#CBD5E1</color>
-    <color name="input_stroke_focused">#2563EB</color>
+    <!-- Crisis Helpline Notice -->
+    <color name="crisis_red">#FF5B61</color>
+    <color name="crisis_banner">#2E1D22</color>
+    <color name="crisis_border">#4D262D</color>
 </resources>
