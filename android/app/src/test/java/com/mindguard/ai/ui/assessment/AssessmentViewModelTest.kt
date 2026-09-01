@@ -87,7 +87,6 @@ class AssessmentViewModelTest {
 
     @Test
     fun testNextCategoryWithoutAnsweringFailsValidation() {
-        // Only answer 1 of 2 questions in category 0
         viewModel.selectAnswer("mood_1", 2.0f)
 
         val advanced = viewModel.nextCategory()
@@ -98,7 +97,6 @@ class AssessmentViewModelTest {
 
     @Test
     fun testNextCategoryWithAllAnsweredAdvancesIndex() {
-        // Answer all questions in category 0
         viewModel.selectAnswer("mood_1", 2.0f)
         viewModel.selectAnswer("mood_2", 3.0f)
 
@@ -128,7 +126,7 @@ class AssessmentViewModelTest {
         val mockResult = AssessmentResult(
             assessmentId = "test_assessment_1",
             userId = "user_test_123",
-            riskLevel = RiskLevel.LOW,
+            riskLevel = "LOW",
             overallScore = 0.85f,
             categoryScores = mapOf("MOOD" to 0.15f)
         )

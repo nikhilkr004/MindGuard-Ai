@@ -151,7 +151,7 @@ class QuestionnaireFragment : Fragment() {
     private fun navigateToResults(result: AssessmentResult) {
         val bundle = Bundle().apply {
             putString("KEY_ASSESSMENT_ID", result.assessmentId)
-            putString("KEY_RISK_LEVEL", result.riskLevel.name)
+            putString("KEY_RISK_LEVEL", result.riskLevel)
             putFloat("KEY_OVERALL_SCORE", result.overallScore)
             putFloat("KEY_SCORE_MOOD", result.categoryScores["MOOD"] ?: 0f)
             putFloat("KEY_SCORE_ANXIETY", result.categoryScores["ANXIETY"] ?: 0f)

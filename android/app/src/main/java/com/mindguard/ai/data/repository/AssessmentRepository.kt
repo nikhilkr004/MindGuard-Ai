@@ -2,11 +2,11 @@ package com.mindguard.ai.data.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.SetOptions
 import com.mindguard.ai.data.local.QuestionnaireLocalDataSource
 import com.mindguard.ai.data.model.AssessmentResult
 import com.mindguard.ai.data.model.Question
 import com.mindguard.ai.data.model.QuestionCategory
-import com.mindguard.ai.data.model.RiskLevel
 import com.mindguard.ai.ml.FeatureMapper
 import com.mindguard.ai.ml.ModelManager
 import com.mindguard.ai.utils.Resource
@@ -52,7 +52,7 @@ class AssessmentRepositoryImpl(
             val result = AssessmentResult(
                 assessmentId = assessmentId,
                 userId = userId,
-                riskLevel = RiskLevel.fromLabel(prediction.riskLevel.name),
+                riskLevel = prediction.riskLevel.name,
                 overallScore = prediction.confidence,
                 categoryScores = categoryScores,
                 answers = answers,
@@ -61,9 +61,13 @@ class AssessmentRepositoryImpl(
                 questionnaireVersion = "Q-V1"
             )
 
-            // 3. Persist to Firestore
+            // 3. Persist to Firestore asynchronously / gracefully
             if (userId.isNotBlank()) {
-                firestore.collection("assessments").document(assessmentId).set(result).await()
+                try {
+                    firestore.collection("assessments").document(assessmentId).set(result.toMap(), SetOptions.merge()).await()
+                } catch (e: Exception) {
+                    // Non-fatal: Allow user to view on-device calculated result even if Firestore rules or offline
+                }
             }
 
             Resource.Success(result)
@@ -80,7 +84,9 @@ class AssessmentRepositoryImpl(
                 .get()
                 .await()
             
-            val results = snapshot.toObjects(AssessmentResult::class.java)
+            val results = snapshot.documents.mapNotNull { doc ->
+                doc.toObject(AssessmentResult::class.java)
+            }
             Resource.Success(results)
         } catch (e: Exception) {
             Resource.Error(e.localizedMessage ?: "Failed to fetch assessment history", e)
