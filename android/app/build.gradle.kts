@@ -72,8 +72,12 @@ dependencies {
     implementation("com.google.firebase:firebase-functions-ktx")
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
 
+    // JSON Serialization
+    implementation("com.google.code.gson:gson:2.10.1")
+
     // ONNX Runtime for Local Machine Learning Inference
     implementation("com.microsoft.onnxruntime:onnxruntime-android:1.17.0")
+
 
     // Testing
     testImplementation("junit:junit:4.13.2")

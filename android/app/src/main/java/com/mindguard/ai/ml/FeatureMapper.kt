@@ -16,6 +16,10 @@ object FeatureMapper {
         "social_01", "social_02", "social_03", "social_04", "social_05", "social_06"
     )
 
+    fun mapAnswersToFeatures(answersMap: Map<String, Float>): FloatArray {
+        return mapAnswersToFeatureVector(answersMap)
+    }
+
     fun mapAnswersToFeatureVector(answersMap: Map<String, Float>): FloatArray {
         val vector = FloatArray(ORDERED_FEATURE_KEYS.size)
         for (i in ORDERED_FEATURE_KEYS.indices) {
@@ -24,5 +28,21 @@ object FeatureMapper {
             vector[i] = answersMap[key] ?: 0.5f
         }
         return vector
+    }
+
+    fun calculateCategoryScores(answersMap: Map<String, Float>): Map<String, Float> {
+        val categories = mapOf(
+            "mood" to (1..6).map { "mood_0$it" },
+            "anxiety" to (1..6).map { "anxiety_0$it" },
+            "stress" to (1..6).map { "stress_0$it" },
+            "sleep" to (1..6).map { "sleep_0$it" },
+            "cognitive" to (1..6).map { "cog_0$it" },
+            "social" to (1..6).map { "social_0$it" }
+        )
+
+        return categories.mapValues { (_, keys) ->
+            val sum = keys.map { answersMap[it] ?: 0.5f }.sum()
+            sum / keys.size.toFloat()
+        }
     }
 }
