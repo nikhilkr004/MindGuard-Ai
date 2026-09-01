@@ -33,17 +33,19 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.resetAuthState()
 
         setupRoleSelectors()
 
         binding.btnRegister.setOnClickListener {
-            val name = binding.etFullName.text?.toString().orEmpty()
-            val email = binding.etRegisterEmail.text?.toString().orEmpty()
+            val name = binding.etFullName.text?.toString().orEmpty().trim()
+            val email = binding.etRegisterEmail.text?.toString().orEmpty().trim()
             val pass = binding.etRegisterPassword.text?.toString().orEmpty()
             viewModel.register(name, email, pass, pass, selectedRole)
         }
 
         binding.btnGoToLogin.setOnClickListener {
+            viewModel.resetAuthState()
             findNavController().navigateUp()
         }
 
@@ -57,12 +59,17 @@ class RegisterFragment : Fragment() {
                     binding.registerProgress.visibility = View.GONE
                     binding.btnRegister.isEnabled = true
                     Toast.makeText(requireContext(), "Account created successfully!", Toast.LENGTH_SHORT).show()
+                    viewModel.resetAuthState()
                     findNavController().navigate(R.id.action_register_to_consent)
                 }
                 is Resource.Error -> {
                     binding.registerProgress.visibility = View.GONE
                     binding.btnRegister.isEnabled = true
                     Toast.makeText(requireContext(), resource.message, Toast.LENGTH_LONG).show()
+                }
+                null -> {
+                    binding.registerProgress.visibility = View.GONE
+                    binding.btnRegister.isEnabled = true
                 }
             }
         }

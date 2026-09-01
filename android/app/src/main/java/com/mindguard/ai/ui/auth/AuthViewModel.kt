@@ -12,17 +12,25 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
-    private val _authState = MutableLiveData<Resource<User>>()
-    val authState: LiveData<Resource<User>> = _authState
+    private val _authState = MutableLiveData<Resource<User>?>()
+    val authState: LiveData<Resource<User>?> = _authState
 
-    private val _consentState = MutableLiveData<Resource<Unit>>()
-    val consentState: LiveData<Resource<Unit>> = _consentState
+    private val _consentState = MutableLiveData<Resource<Unit>?>()
+    val consentState: LiveData<Resource<Unit>?> = _consentState
 
-    private val _passwordResetState = MutableLiveData<Resource<Unit>>()
-    val passwordResetState: LiveData<Resource<Unit>> = _passwordResetState
+    private val _passwordResetState = MutableLiveData<Resource<Unit>?>()
+    val passwordResetState: LiveData<Resource<Unit>?> = _passwordResetState
 
     val isUserLoggedIn: Boolean
         get() = authRepository.isUserLoggedIn
+
+    fun resetAuthState() {
+        _authState.value = null
+    }
+
+    fun resetConsentState() {
+        _consentState.value = null
+    }
 
     fun login(email: String, pass: String) {
         if (email.isBlank() || pass.isBlank()) {

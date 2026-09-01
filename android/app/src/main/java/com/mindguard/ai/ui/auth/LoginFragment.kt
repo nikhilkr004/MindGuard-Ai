@@ -29,18 +29,21 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.resetAuthState()
 
         binding.btnLogin.setOnClickListener {
-            val email = binding.etEmail.text?.toString().orEmpty()
+            val email = binding.etEmail.text?.toString().orEmpty().trim()
             val pass = binding.etPassword.text?.toString().orEmpty()
             viewModel.login(email, pass)
         }
 
         binding.btnGoToRegister.setOnClickListener {
+            viewModel.resetAuthState()
             findNavController().navigate(R.id.action_login_to_register)
         }
 
         binding.btnForgotPassword.setOnClickListener {
+            viewModel.resetAuthState()
             findNavController().navigate(R.id.action_login_to_forgotPassword)
         }
 
@@ -54,6 +57,7 @@ class LoginFragment : Fragment() {
                     binding.loginProgress.visibility = View.GONE
                     binding.btnLogin.isEnabled = true
                     val user = resource.data
+                    viewModel.resetAuthState()
                     if (user.consentAccepted) {
                         findNavController().navigate(R.id.action_login_to_home)
                     } else {
@@ -64,6 +68,10 @@ class LoginFragment : Fragment() {
                     binding.loginProgress.visibility = View.GONE
                     binding.btnLogin.isEnabled = true
                     Toast.makeText(requireContext(), resource.message, Toast.LENGTH_LONG).show()
+                }
+                null -> {
+                    binding.loginProgress.visibility = View.GONE
+                    binding.btnLogin.isEnabled = true
                 }
             }
         }
