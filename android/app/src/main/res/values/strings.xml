@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MindGuard AI</string>
+    <string name="app_tagline">AI-Integrated Mental Health Risk Screening &amp; Teleconsultation</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_assess">Assess</string>
+    <string name="nav_wellbeing">Wellbeing</string>
+    <string name="nav_professionals">Professionals</string>
+    <string name="nav_appointments">Appointments</string>
+
+    <!-- General Actions -->
+    <string name="action_next">Next</string>
+    <string name="action_back">Back</string>
+    <string name="action_submit">Submit</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_retry">Retry</string>
+
+    <!-- Disclaimer -->
+    <string name="preliminary_disclaimer">MindGuard AI provides preliminary risk screening only. It does not provide medical diagnoses or replace a licensed mental health professional.</string>
+</resources>

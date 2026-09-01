@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@android:drawable/ic_menu_today"
+        android:title="@string/nav_home" />
+    <item
+        android:id="@+id/nav_assess"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="@string/nav_assess" />
+    <item
+        android:id="@+id/nav_wellbeing"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="@string/nav_wellbeing" />
+    <item
+        android:id="@+id/nav_professionals"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/nav_professionals" />
+    <item
+        android:id="@+id/nav_appointments"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="@string/nav_appointments" />
+</menu>

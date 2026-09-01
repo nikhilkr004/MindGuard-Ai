@@ -1,0 +1,254 @@
+[
+  {
+    "id": "mood_01",
+    "category": "mood",
+    "categoryTitle": "Mood & Emotional State",
+    "text": "How often have you felt down, depressed, or hopeless over the past 2 weeks?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "mood_02",
+    "category": "mood",
+    "categoryTitle": "Mood & Emotional State",
+    "text": "How often have you had little interest or pleasure in doing things you usually enjoy?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "mood_03",
+    "category": "mood",
+    "categoryTitle": "Mood & Emotional State",
+    "text": "How frequently do you feel emotionally drained, numb, or overwhelmed by routine feelings?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "mood_04",
+    "category": "mood",
+    "categoryTitle": "Mood & Emotional State",
+    "text": "How often have you experienced sudden unprovoked shifts or drops in your mood?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "mood_05",
+    "category": "mood",
+    "categoryTitle": "Mood & Emotional State",
+    "text": "How often do you feel burdened by feelings of worthlessness or excessive self-criticism?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "mood_06",
+    "category": "mood",
+    "categoryTitle": "Mood & Emotional State",
+    "text": "How often do you find yourself feeling easily irritable, impatient, or frustrated?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "anxiety_01",
+    "category": "anxiety",
+    "categoryTitle": "Anxiety & Worry",
+    "text": "How often have you felt nervous, anxious, on edge, or unable to sit still?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "anxiety_02",
+    "category": "anxiety",
+    "categoryTitle": "Anxiety & Worry",
+    "text": "How frequently do you find it difficult to stop or control persistent worrying thoughts?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "anxiety_03",
+    "category": "anxiety",
+    "categoryTitle": "Anxiety & Worry",
+    "text": "How often do you worry excessively about different things, even when there is no immediate reason?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "anxiety_04",
+    "category": "anxiety",
+    "categoryTitle": "Anxiety & Worry",
+    "text": "How often do you experience a sense of dread, impending doom, or fear that something bad will happen?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "anxiety_05",
+    "category": "anxiety",
+    "categoryTitle": "Anxiety & Worry",
+    "text": "How often do you experience physical anxiety symptoms (rapid heartbeat, shallow breathing, trembling)?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "anxiety_06",
+    "category": "anxiety",
+    "categoryTitle": "Anxiety & Worry",
+    "text": "How often do you avoid social, academic, or professional situations due to anticipatory anxiety?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "stress_01",
+    "category": "stress",
+    "categoryTitle": "Stress & Coping",
+    "text": "How often have you felt unable to relax, unwind, or let go of tension?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "stress_02",
+    "category": "stress",
+    "categoryTitle": "Stress & Coping",
+    "text": "How frequently do you feel that pressures, deadlines, or responsibilities are piling up uncontrollably?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "stress_03",
+    "category": "stress",
+    "categoryTitle": "Stress & Coping",
+    "text": "How often do you feel that you cannot cope with all the demands placed on you?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "stress_04",
+    "category": "stress",
+    "categoryTitle": "Stress & Coping",
+    "text": "How often do minor unexpected changes or minor delays trigger disproportionate stress for you?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "stress_05",
+    "category": "stress",
+    "categoryTitle": "Stress & Coping",
+    "text": "How often do you feel physical symptoms of stress, such as tight shoulder muscles, jaw clenching, or tension headaches?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "stress_06",
+    "category": "stress",
+    "categoryTitle": "Stress & Coping",
+    "text": "How often do you find yourself reacting impulsively or snapping under pressure?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "sleep_01",
+    "category": "sleep",
+    "categoryTitle": "Sleep & Recovery",
+    "text": "How often do you have trouble falling asleep within 30 minutes of getting into bed?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "sleep_02",
+    "category": "sleep",
+    "categoryTitle": "Sleep & Recovery",
+    "text": "How often do you wake up repeatedly during the night or earlier than intended and struggle to fall back asleep?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "sleep_03",
+    "category": "sleep",
+    "categoryTitle": "Sleep & Recovery",
+    "text": "How often do you wake up feeling unrefreshed, fatigued, or low on physical energy?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "sleep_04",
+    "category": "sleep",
+    "categoryTitle": "Sleep & Recovery",
+    "text": "How irregular has your daily sleep and wake schedule been over the past two weeks?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "sleep_05",
+    "category": "sleep",
+    "categoryTitle": "Sleep & Recovery",
+    "text": "How often does daytime drowsiness interfere with your focus or daily activities?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "sleep_06",
+    "category": "sleep",
+    "categoryTitle": "Sleep & Recovery",
+    "text": "How often do you spend more than 30 minutes looking at screens in bed before sleeping?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "cog_01",
+    "category": "cognitive",
+    "categoryTitle": "Cognitive Functioning",
+    "text": "How often do you find it hard to concentrate on reading, studying, or focused work?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "cog_02",
+    "category": "cognitive",
+    "categoryTitle": "Cognitive Functioning",
+    "text": "How frequently do you experience racing, scattered, or disorganized thoughts?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "cog_03",
+    "category": "cognitive",
+    "categoryTitle": "Cognitive Functioning",
+    "text": "How often do you experience brain fog, forgetfulness, or trouble remembering simple daily tasks?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "cog_04",
+    "category": "cognitive",
+    "categoryTitle": "Cognitive Functioning",
+    "text": "How often do you struggle with indecision or putting off making even routine decisions?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "cog_05",
+    "category": "cognitive",
+    "categoryTitle": "Cognitive Functioning",
+    "text": "How often do you feel that your mental processing speed or clarity has noticeably declined?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "cog_06",
+    "category": "cognitive",
+    "categoryTitle": "Cognitive Functioning",
+    "text": "How often do you find yourself spacing out or losing track of conversations?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "social_01",
+    "category": "social",
+    "categoryTitle": "Daily Functioning & Social",
+    "text": "How often do you tend to isolate yourself or withdraw from family, friends, and peers?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "social_02",
+    "category": "social",
+    "categoryTitle": "Daily Functioning & Social",
+    "text": "How frequently do you feel lonely, unsupported, or misunderstood even around others?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "social_03",
+    "category": "social",
+    "categoryTitle": "Daily Functioning & Social",
+    "text": "How often do emotional challenges disrupt your ability to complete daily routines (hygiene, meals, chores)?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "social_04",
+    "category": "social",
+    "categoryTitle": "Daily Functioning & Social",
+    "text": "How often has your academic or work productivity declined due to how you have been feeling?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "social_05",
+    "category": "social",
+    "categoryTitle": "Daily Functioning & Social",
+    "text": "How often do you lack the motivation or willpower to begin tasks you know need to be done?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  },
+  {
+    "id": "social_06",
+    "category": "social",
+    "categoryTitle": "Daily Functioning & Social",
+    "text": "How often do you feel uncomfortable reaching out to someone you trust when feeling low or stressed?",
+    "options": ["Never", "Rarely", "Sometimes", "Often", "Almost Always"]
+  }
+]

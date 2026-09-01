@@ -1,0 +1,37 @@
+# IDEs
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+venv/
+env/
+ENV/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Android / Gradle
+.gradle/
+build/
+app/build/
+android/app/build/
+android/.gradle/
+*.apk
+*.aab
+local.properties
+.cxx/
+
+# Node / Firebase
+node_modules/
+npm-debug.log
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+functions/node_modules/

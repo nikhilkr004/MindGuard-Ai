@@ -1,0 +1,35 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && request.auth.token.role == 'admin';
+    }
+
+    // User profile avatars
+    match /users/{userId}/avatars/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId) && request.resource.size < 5 * 1024 * 1024 && request.resource.contentType.matches('image/.*');
+    }
+
+    // Professional credentials & licenses (Admin & Owner access only)
+    match /professionals/{professionalId}/credentials/{allPaths=**} {
+      allow read: if isAuthenticated() && (request.auth.uid == professionalId || isAdmin());
+      allow write: if isAuthenticated() && request.auth.uid == professionalId && request.resource.size < 10 * 1024 * 1024;
+    }
+
+    // Public app assets
+    match /public/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}
