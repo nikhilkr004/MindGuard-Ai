@@ -48,6 +48,7 @@ class AppointmentRepositoryImpl(
             val data = hashMapOf(
                 "professionalId" to professionalId,
                 "slotId" to slotId,
+                "consultationType" to mode.name.lowercase(),
                 "mode" to mode.name,
                 "notes" to notes
             )

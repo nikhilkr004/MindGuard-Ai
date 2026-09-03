@@ -18,6 +18,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="28dp"
             android:src="@drawable/ic_mindguard_brain"
+            android:tint="@color/text_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

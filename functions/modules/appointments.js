@@ -11,10 +11,11 @@ exports.createAppointment = functions.https.onCall(async (data, context) => {
     throw new functions.https.HttpsError("unauthenticated", "User must be authenticated.");
   }
 
-  const { professionalId, slotId, consultationType } = data;
+  const { professionalId, slotId, consultationType, mode } = data;
+  const effectiveConsultationType = consultationType || mode || "video";
   const userId = context.auth.uid;
 
-  if (!professionalId || !slotId || !consultationType) {
+  if (!professionalId || !slotId) {
     throw new functions.https.HttpsError("invalid-argument", "Missing required appointment parameters.");
   }
 
@@ -48,7 +49,7 @@ exports.createAppointment = functions.https.onCall(async (data, context) => {
       slotId: slotId,
       startTime: slotDoc.data().startTime,
       endTime: slotDoc.data().endTime,
-      consultationType: consultationType, // 'video', 'audio', or 'chat'
+      consultationType: effectiveConsultationType.toLowerCase(), // 'video', 'audio', or 'chat'
       status: "confirmed",
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
       updatedAt: admin.firestore.FieldValue.serverTimestamp(),

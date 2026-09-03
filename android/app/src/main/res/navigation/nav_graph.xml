@@ -105,6 +105,24 @@
         <action
             android:id="@+id/action_home_to_questionnaire"
             app:destination="@id/questionnaireFragment" />
+        <action
+            android:id="@+id/action_home_to_calmingZone"
+            app:destination="@id/calmingZoneFragment" />
+        <action
+            android:id="@+id/action_home_to_breathing"
+            app:destination="@id/breathingFragment" />
+        <action
+            android:id="@+id/action_home_to_grounding"
+            app:destination="@id/groundingFragment" />
+        <action
+            android:id="@+id/action_home_to_dailyCheckIn"
+            app:destination="@id/dailyCheckInFragment" />
+        <action
+            android:id="@+id/action_home_to_digitalWellbeing"
+            app:destination="@id/digitalWellbeingFragment" />
+        <action
+            android:id="@+id/action_home_to_professionals"
+            app:destination="@id/professionalsFragment" />
     </fragment>
 
     <fragment
@@ -126,6 +144,93 @@
         tools:layout="@layout/fragment_assessment_result">
         <action
             android:id="@+id/action_assessmentResult_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- Phase 5: Calming Zone & Wellbeing Destinations -->
+    <fragment
+        android:id="@+id/calmingZoneFragment"
+        android:name="com.mindguard.ai.ui.calming.CalmingZoneFragment"
+        android:label="Calming Zone"
+        tools:layout="@layout/fragment_calming_zone">
+        <action
+            android:id="@+id/action_calmingZone_to_breathing"
+            app:destination="@id/breathingFragment" />
+        <action
+            android:id="@+id/action_calmingZone_to_grounding"
+            app:destination="@id/groundingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/breathingFragment"
+        android:name="com.mindguard.ai.ui.calming.BreathingFragment"
+        android:label="Box Breathing"
+        tools:layout="@layout/fragment_breathing" />
+
+    <fragment
+        android:id="@+id/groundingFragment"
+        android:name="com.mindguard.ai.ui.calming.GroundingFragment"
+        android:label="Sensory Grounding"
+        tools:layout="@layout/fragment_grounding" />
+
+    <fragment
+        android:id="@+id/dailyCheckInFragment"
+        android:name="com.mindguard.ai.ui.wellbeing.DailyCheckInFragment"
+        android:label="Daily Check-In"
+        tools:layout="@layout/fragment_daily_checkin" />
+
+    <fragment
+        android:id="@+id/digitalWellbeingFragment"
+        android:name="com.mindguard.ai.ui.wellbeing.DigitalWellbeingFragment"
+        android:label="Digital Wellbeing"
+        tools:layout="@layout/fragment_digital_wellbeing">
+        <action
+            android:id="@+id/action_digitalWellbeing_to_breathing"
+            app:destination="@id/breathingFragment" />
+    </fragment>
+
+    <!-- Phase 6: Professional Directory, Details & Booking Destinations -->
+    <fragment
+        android:id="@+id/professionalsFragment"
+        android:name="com.mindguard.ai.ui.professionals.ProfessionalsFragment"
+        android:label="Care Providers"
+        tools:layout="@layout/fragment_professionals">
+        <action
+            android:id="@+id/action_professionals_to_detail"
+            app:destination="@id/professionalDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/professionalDetailFragment"
+        android:name="com.mindguard.ai.ui.professionals.ProfessionalDetailFragment"
+        android:label="Practitioner Profile"
+        tools:layout="@layout/fragment_professional_detail">
+        <action
+            android:id="@+id/action_detail_to_booking"
+            app:destination="@id/bookingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookingFragment"
+        android:name="com.mindguard.ai.ui.booking.BookingFragment"
+        android:label="Book Consultation"
+        tools:layout="@layout/fragment_booking">
+        <action
+            android:id="@+id/action_booking_to_confirmation"
+            app:destination="@id/bookingConfirmationFragment"
+            app:popUpTo="@id/professionalsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookingConfirmationFragment"
+        android:name="com.mindguard.ai.ui.booking.BookingConfirmationFragment"
+        android:label="Booking Confirmed"
+        tools:layout="@layout/fragment_booking_confirmation">
+        <action
+            android:id="@+id/action_confirmation_to_home"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
